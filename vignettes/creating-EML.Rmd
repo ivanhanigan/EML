@@ -12,7 +12,8 @@ vignette: >
 
 
 ```{r}
-library("EML")
+#library("EML")
+devtools::load_all()
 ```
 
 Here we construct a common EML file, including: 
@@ -74,7 +75,7 @@ so our resulting EML will not be perfectly identical to the original.
 
 We will build this EML file from the bottom up, starting with the two main components
 of a `dataTable` indicated above: the `attributeList` and the `physical` file type.
-We will then slip these two pieces into place inside a `dataTable` element, and slip
+We will then insert these two pieces into place inside a `dataTable` element, and then insert
 that into our `eml` element along with the rest of the generic metadata, much like
 building a puzzle or nesting a set of Russian dolls.  
 
@@ -84,8 +85,9 @@ to the academic researchers.  Metadata from this template is then read off
 by hand and an EML file is generated using a combination of a commercial
 XML editing platform (Oxygen) for commonly used higher-level elements,
 and the Java platform `Morpho` provided by the EML development team for
-lower level attribute metadata.
-
+lower level attribute metadata. The R package `EML` offers several improvements over those
+strategies, including the ability to automate many repetitive tasks which create metadata directly from 
+the data rather than manual entry and thus avoid typos or other errors.
 
 ## Attribute Metadata
 
@@ -131,6 +133,12 @@ data.frame(
   stringsAsFactors = FALSE
 )
 
+```
+
+This creates a `data.frame` shown below.
+
+```{r, results='asis'}
+print(xtable::xtable(attributes), type = "html", include.rownames = F)
 ```
 
 Factors (enumerated domains) need to specify definitions for each of the code terms appearing in the data columns.  This does not fit so nicely in the above table, where each attribute is a single row, so if data uses factors (instead of non-enumerated strings), these definitions must be provided in a separate table.  The format expected of this table has three columns: `attributeName` (as before), `code`, and `definition`.  Note that `attributeName` is simply repeated for all codes belonging to a common attribute.  
