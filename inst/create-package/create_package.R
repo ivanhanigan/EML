@@ -42,8 +42,8 @@ xs_base_classes(classes_file)
 
 
 ## This call to create_classes needs to pass a custom namespace
-stmml_ns <- xml_ns_rename( xml_ns(read_xml("inst/xsd/stmml.xsd")), xsd = "xs")
-create_classes("inst/xsd/stmml.xsd", classes_file, methods_file, ns = stmml_ns)
+#stmml_ns <- xml_ns_rename( xml_ns(read_xml("inst/xsd/stmml.xsd")), xsd = "xs")
+#create_classes("inst/xsd/stmml.xsd", classes_file, methods_file, ns = stmml_ns)
 
 ## Collate list -- avoid errors by manually setting the order of XSD file parsing
 collate <- c(
@@ -92,7 +92,7 @@ replace_class('size', "setClass('size', slots = c('character' = 'character', 'un
 replace_class('metadata', "setClass('metadata', contains='InlineType')", classes_file)
 replace_class('inline', "setClass('inline', contains='InlineType')", classes_file)
 replace_class('InlineType', "setClass('InlineType', contains=c('list'))", classes_file)
-replace_class('parameter', "setClass('parameter', slots = c(name = 'character', value = 'character', 'domainDescription' = 'character', 'required' = 'character', 'repeats' = 'character'))", classes_file)
+replace_class('parameter', "setClass('parameter', slots = c(name = 'character', value = 'character', 'domainDescription' = 'character', 'required' = 'character', 'repeats' = 'character'), contains = 'eml-2.1.1')", classes_file)
 replace_class('PhysicalOnlineType', "setClass('PhysicalOnlineType',  slots = c('onlineDescription' = 'i18nNonEmptyStringType', 'url' = 'UrlType', 'connection' = 'ConnectionType', 'connectionDefinition' = 'ConnectionDefinitionType'), contains = c('eml-2.1.1', 'character'))", classes_file)
 replace_class('online', "setClass('online', contains = c('PhysicalOnlineType', 'OnlineType', 'eml-2.1.1'))", classes_file)
 move_to_end("coverage", classes_file)
